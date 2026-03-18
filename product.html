@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — Pretrendy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              black: '#0a0a0a',
+              dark: '#1a1a1a',
+              gray: '#6b6b6b',
+              light: '#f7f5f2',
+              white: '#faf8f5',
+              cream: '#f0ece6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    /* Rainbow blobs */
+    .section-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      animation: blob-float 15s ease-in-out infinite alternate;
+    }
+    @keyframes blob-float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -20px) scale(1.1); }
+      100% { transform: translate(-20px, 15px) scale(0.95); }
+    }
+
+    /* Rainbow glow */
+    .rainbow-glow {
+      background: linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db, #9b59b6);
+      background-size: 300% 100%;
+      animation: rainbow-shift 6s linear infinite;
+    }
+    @keyframes rainbow-shift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    /* Logo */
+    .logo-p {
+      background: linear-gradient(135deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Marquee */
+    .marquee { overflow: hidden; white-space: nowrap; }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee-scroll 25s linear infinite;
+    }
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Rainbow button */
+    .btn-rainbow {
+      background: linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db);
+      background-size: 200% 100%;
+      animation: rainbow-shift 4s linear infinite;
+    }
+
+    /* Fade-in */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* Thumbnail gallery */
+    .thumb { border: 2px solid transparent; transition: all 0.2s ease; cursor: pointer; }
+    .thumb.active { border-color: #0a0a0a; }
+    .thumb:hover:not(.active) { border-color: rgba(0,0,0,0.2); }
+
+    /* Main image zoom on hover */
+    .main-image-wrap { overflow: hidden; cursor: crosshair; }
+    .main-image-wrap img {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .main-image-wrap:hover img { transform: scale(1.5); }
+
+    /* Size selector */
+    .size-btn {
+      border: 1.5px solid rgba(0,0,0,0.15);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .size-btn:hover { border-color: #0a0a0a; }
+    .size-btn.selected {
+      background: #0a0a0a;
+      color: white;
+      border-color: #0a0a0a;
+    }
+
+    /* Color dot */
+    .color-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .color-dot:hover { transform: scale(1.1); }
+    .color-dot.selected {
+      border-color: #0a0a0a;
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #0a0a0a;
+    }
+
+    /* Quantity stepper */
+    .qty-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .qty-btn:hover { border-color: #0a0a0a; background: #f7f5f2; }
+
+    /* Accordion */
+    .accordion-trigger { cursor: pointer; }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .accordion-content.open { max-height: 500px; }
+    .accordion-icon { transition: transform 0.3s ease; }
+    .accordion-trigger.open .accordion-icon { transform: rotate(45deg); }
+
+    /* Social bar */
+    .social-bar {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* Product card hover */
+    .product-card img.product-img {
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .product-card:hover img.product-img { transform: scale(1.04); }
+
+    /* Rainbow text */
+    .rainbow-text {
+      background: linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db, #9b59b6);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: rainbow-shift 6s linear infinite;
+    }
+
+    /* Rainbow underline */
+    .rainbow-underline { position: relative; display: inline-block; }
+    .rainbow-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db);
+      border-radius: 2px;
+    }
+
+    /* Toast notification */
+    .toast {
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show { transform: translateX(0); }
+
+    /* Wishlist heart */
+    .wishlist-btn {
+      transition: all 0.2s ease;
+    }
+    .wishlist-btn:hover { transform: scale(1.15); }
+    .wishlist-btn.active svg {
+      fill: #e74c3c;
+      stroke: #e74c3c;
+    }
+    .wishlist-btn.active {
+      animation: heart-pop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+    @keyframes heart-pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    /* Star rating */
+    .star { transition: all 0.15s ease; cursor: pointer; filter: drop-shadow(0 1px 2px rgba(243,156,18,0.3)); }
+    .star:hover { transform: scale(1.2); }
+    .star.filled { color: #f39c12; }
+    .star.empty { color: #d5d5d5; filter: none; }
+
+    /* Stock urgency pulse */
+    .stock-dot {
+      width: 6px; height: 6px;
+      background: #e74c3c;
+      border-radius: 50%;
+      animation: stock-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes stock-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Viewers badge */
+    .viewer-dot {
+      width: 6px; height: 6px;
+      background: #2ecc71;
+      border-radius: 50%;
+      animation: stock-pulse 2s ease-in-out infinite;
+    }
+
+    /* Navbar wishlist count */
+    .wishlist-count {
+      opacity: 0; transform: scale(0);
+      transition: all 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+    .wishlist-count.show {
+      opacity: 1; transform: scale(1);
+    }
+
+    /* Share button */
+    .share-btn {
+      transition: all 0.15s ease;
+    }
+    .share-btn:hover { color: #0a0a0a; transform: translateY(-1px); }
+
+    /* Review bar fill */
+    .review-bar-fill {
+      transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  </style>
+</head>
+<body class="bg-brand-white text-brand-black font-sans antialiased">
+
+  <!-- Marquee Ticker -->
+  <div class="marquee bg-brand-black py-1.5 fixed top-0 left-0 right-0 z-50">
+    <div class="marquee-inner">
+      <span class="text-[10px] font-medium uppercase tracking-[0.25em] text-white/70">
+        &nbsp;&nbsp;&nbsp;FREE SHIPPING OVER $50&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;NEW DROPS WEEKLY&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;MEME CULTURE WORN LOUD&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;100% COTTON&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;EASY RETURNS&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;FREE SHIPPING OVER $50&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;NEW DROPS WEEKLY&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;MEME CULTURE WORN LOUD&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;100% COTTON&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;EASY RETURNS&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;
+      </span>
+      <span class="text-[10px] font-medium uppercase tracking-[0.25em] text-white/70">
+        &nbsp;&nbsp;&nbsp;FREE SHIPPING OVER $50&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;NEW DROPS WEEKLY&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;MEME CULTURE WORN LOUD&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;100% COTTON&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;EASY RETURNS&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;FREE SHIPPING OVER $50&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;NEW DROPS WEEKLY&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;MEME CULTURE WORN LOUD&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;100% COTTON&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;EASY RETURNS&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;
+      </span>
+    </div>
+  </div>
+
+  <!-- Social Bar -->
+  <div class="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-4 px-4 py-6">
+    <a href="https://instagram.com/pretrendy" target="_blank" rel="noopener" class="group flex flex-col items-center gap-3">
+      <span class="social-bar text-[11px] font-medium tracking-[0.2em] uppercase text-brand-gray group-hover:text-brand-black transition-colors">Instagram</span>
+      <span class="w-px h-8 bg-brand-gray/30"></span>
+      <svg class="w-4 h-4 text-brand-gray group-hover:text-brand-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-[28px] left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center hover:scale-105 transition-transform duration-200">
+        <img src="imgs/logo_new2_transparent.png" alt="Pretrendy" class="h-20 w-auto object-contain translate-y-[2px]" />
+      </a>
+      <div class="hidden md:block flex-1 max-w-md mx-8 mt-1">
+        <div class="rainbow-glow rounded-full p-[1.5px]">
+          <div class="bg-white rounded-full flex items-center px-4 py-2">
+            <svg class="w-4 h-4 text-brand-gray mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+            </svg>
+            <input type="text" placeholder="Search products..." class="w-full bg-transparent text-[13px] text-brand-black placeholder-brand-gray/60 outline-none" />
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-5">
+        <button class="md:hidden text-brand-gray hover:text-brand-black transition-colors">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+          </svg>
+        </button>
+        <button class="text-brand-gray hover:text-brand-black transition-colors">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+          </svg>
+        </button>
+        <button class="relative text-brand-gray hover:text-brand-black transition-colors" id="nav-wishlist" onclick="toggleNavWishlist()">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+          </svg>
+          <span class="wishlist-count absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[10px] font-medium rounded-full flex items-center justify-center" id="nav-wishlist-count">0</span>
+        </button>
+        <button class="relative text-brand-gray hover:text-brand-black transition-colors" id="cart-icon">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+          </svg>
+          <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-brand-black text-white text-[10px] font-medium rounded-full flex items-center justify-center" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sub-nav -->
+  <div class="fixed top-[84px] left-0 right-0 z-30 bg-brand-light/90 backdrop-blur-sm border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-center gap-8 h-9">
+      <a href="index.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Products</a>
+      <a href="index.html#products" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Hot</a>
+      <a href="#" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Blog</a>
+      <a href="#" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Delivery</a>
+      <a href="#contact" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Contact</a>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="pt-[130px] px-6">
+    <div class="max-w-6xl mx-auto">
+      <nav class="flex items-center gap-2 text-[12px] text-brand-gray">
+        <a href="index.html" class="hover:text-brand-black transition-colors">Home</a>
+        <span>/</span>
+        <a href="index.html#products" class="hover:text-brand-black transition-colors">T-Shirts</a>
+        <span>/</span>
+        <span class="text-brand-black">"Fih Is Calling" Meme Tee</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Product Detail -->
+  <section class="py-10 px-6 relative overflow-hidden">
+    <div class="section-blob" style="width:500px;height:500px;background:rgba(155,89,182,0.14);top:-100px;left:-150px;"></div>
+    <div class="section-blob" style="width:450px;height:450px;background:rgba(243,156,18,0.12);bottom:-80px;right:-100px;animation-delay:-5s;"></div>
+
+    <div class="max-w-6xl mx-auto relative z-[1]">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+
+        <!-- Left: Image Gallery -->
+        <div class="fade-up">
+          <!-- Main Image -->
+          <div class="relative">
+            <div class="main-image-wrap aspect-[3/4] bg-brand-light rounded-sm mb-4" id="main-image-wrap">
+              <img src="imgs/meme1.jpg" alt="Fih Is Calling Meme Tee" class="w-full h-full object-cover object-center" id="main-image" />
+            </div>
+            <!-- Wishlist Heart -->
+            <button class="wishlist-btn absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md z-10" onclick="toggleWishlist(this)" title="Add to wishlist">
+              <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+              </svg>
+            </button>
+            <!-- Sale badge -->
+            <div class="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full z-10">Sale</div>
+          </div>
+
+          <!-- Thumbnail Row -->
+          <div class="grid grid-cols-4 gap-3">
+            <div class="thumb active rounded-sm overflow-hidden aspect-square bg-brand-light" onclick="switchImage(this, 'imgs/meme1.jpg')">
+              <img src="imgs/meme1.jpg" alt="Front view" class="w-full h-full object-cover" />
+            </div>
+            <div class="thumb rounded-sm overflow-hidden aspect-square bg-brand-light" onclick="switchImage(this, 'imgs/meme2.jpg')">
+              <img src="imgs/meme2.jpg" alt="Back view" class="w-full h-full object-cover" />
+            </div>
+            <div class="thumb rounded-sm overflow-hidden aspect-square bg-brand-light" onclick="switchImage(this, 'imgs/meme3.jpg')">
+              <img src="imgs/meme3.jpg" alt="Detail view" class="w-full h-full object-cover" />
+            </div>
+            <div class="thumb rounded-sm overflow-hidden aspect-square bg-brand-light" onclick="switchImage(this, 'imgs/meme4.jpg')">
+              <img src="imgs/meme4.jpg" alt="Lifestyle view" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Product Info -->
+        <div class="fade-up lg:pt-4">
+          <!-- Title & Price -->
+          <div class="mb-6">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-[11px] font-medium uppercase tracking-[0.15em] text-brand-gray">Pretrendy Originals</p>
+              <div class="flex items-center gap-3">
+                <a href="https://wa.me/?text=Check%20out%20this%20meme%20tee!" target="_blank" class="share-btn text-brand-gray/50 hover:text-[#25D366]" title="WhatsApp">
+                  <svg class="w-[15px] h-[15px]" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                </a>
+                <button class="share-btn text-brand-gray/50 hover:text-brand-black" onclick="shareTwitter()" title="X">
+                  <svg class="w-[15px] h-[15px]" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </button>
+                <a href="https://www.threads.net/" target="_blank" class="share-btn text-brand-gray/50 hover:text-brand-black" title="Threads">
+                  <svg class="w-[15px] h-[15px]" fill="currentColor" viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.083.717 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.287 3.263-.839 1.03-1.997 1.594-3.447 1.681-1.1.066-2.18-.182-3.04-.698-1.006-.605-1.62-1.53-1.725-2.605-.096-.98.262-1.91.984-2.55.66-.586 1.59-.928 2.694-.99 1.304-.073 2.462.134 3.46.573-.01-.482-.076-.92-.198-1.308-.294-.937-.9-1.574-1.804-1.894-.458-.162-.996-.25-1.598-.264-.535.004-1.478.094-2.342.635l-1.054-1.737c1.314-.796 2.738-1.065 3.73-1.019.846.04 1.605.174 2.258.4 1.4.486 2.388 1.46 2.852 2.936.254.808.373 1.768.35 2.852.58.342 1.09.745 1.524 1.215.808.878 1.353 1.973 1.566 3.2.36 2.076-.105 4.376-1.858 6.128C18.612 23.05 15.98 23.97 12.186 24zm-1.248-7.498c-.856.051-1.487.287-1.82.576-.224.2-.381.497-.35.838.054.513.383.927.928 1.255.613.37 1.39.53 2.19.488.973-.058 1.727-.41 2.302-1.078.458-.533.788-1.256.957-2.152-.739-.32-1.578-.5-2.548-.5-.567 0-1.108.039-1.66.073z"/></svg>
+                </a>
+                <a href="https://instagram.com/pretrendy" target="_blank" class="share-btn text-brand-gray/50 hover:text-[#E1306C]" title="Instagram">
+                  <svg class="w-[15px] h-[15px]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">"Fih Is Calling" Meme Tee</h1>
+
+            <!-- Star Rating -->
+            <div class="flex items-center gap-3 mb-4 -mt-1">
+              <div class="flex items-center gap-1">
+                <svg class="star filled w-[22px] h-[22px]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="star filled w-[22px] h-[22px]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="star filled w-[22px] h-[22px]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="star filled w-[22px] h-[22px]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="star empty w-[22px] h-[22px]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <a href="#reviews" class="text-[13px] text-brand-gray hover:text-brand-black transition-colors underline">4.0 (127 reviews)</a>
+            </div>
+
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl font-bold">$21.99</span>
+              <span class="text-[15px] text-brand-gray line-through">$29.32</span>
+              <span class="text-[13px] text-white font-semibold bg-red-500 px-2.5 py-0.5 rounded-full">-25%</span>
+            </div>
+
+            <!-- Stock urgency -->
+            <div class="flex items-center gap-2 mb-3">
+              <span class="stock-dot"></span>
+              <span class="text-[12px] text-red-600 font-medium">Only 4 left in stock — order soon!</span>
+            </div>
+
+            <p class="text-[12px] text-brand-gray">Tax included. <a href="#" class="underline hover:text-brand-black transition-colors">Shipping</a> calculated at checkout.</p>
+          </div>
+
+          <!-- Divider -->
+          <div class="h-px bg-black/8 mb-6"></div>
+
+          <!-- Color Picker -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[13px] font-semibold">Color</span>
+              <span class="text-[12px] text-brand-gray" id="color-name">Black</span>
+            </div>
+            <div class="flex gap-3">
+              <div class="color-dot selected" style="background:#0a0a0a;" onclick="selectColor(this, 'Black')" title="Black"></div>
+              <div class="color-dot" style="background:#f5f5f5; border: 1px solid rgba(0,0,0,0.1);" onclick="selectColor(this, 'White')" title="White"></div>
+              <div class="color-dot" style="background:#2c3e50;" onclick="selectColor(this, 'Navy')" title="Navy"></div>
+              <div class="color-dot" style="background:#7f8c8d;" onclick="selectColor(this, 'Heather Gray')" title="Heather Gray"></div>
+            </div>
+          </div>
+
+          <!-- Size Selector -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[13px] font-semibold">Size</span>
+              <button class="text-[12px] text-brand-gray underline hover:text-brand-black transition-colors" onclick="document.getElementById('size-guide').classList.toggle('hidden')">Size Guide</button>
+            </div>
+            <div class="flex gap-2">
+              <button class="size-btn rounded-md px-5 py-2.5 text-[13px] font-medium" onclick="selectSize(this, 'XS')">XS</button>
+              <button class="size-btn rounded-md px-5 py-2.5 text-[13px] font-medium" onclick="selectSize(this, 'S')">S</button>
+              <button class="size-btn selected rounded-md px-5 py-2.5 text-[13px] font-medium" onclick="selectSize(this, 'M')">M</button>
+              <button class="size-btn rounded-md px-5 py-2.5 text-[13px] font-medium" onclick="selectSize(this, 'L')">L</button>
+              <button class="size-btn rounded-md px-5 py-2.5 text-[13px] font-medium" onclick="selectSize(this, 'XL')">XL</button>
+              <button class="size-btn rounded-md px-5 py-2.5 text-[13px] font-medium" onclick="selectSize(this, 'XXL')">XXL</button>
+            </div>
+          </div>
+
+          <!-- Size Guide (hidden) -->
+          <div id="size-guide" class="hidden mb-6 bg-brand-light rounded-lg p-5">
+            <h4 class="text-[13px] font-semibold mb-3">Size Guide (cm)</h4>
+            <table class="w-full text-[12px]">
+              <thead>
+                <tr class="text-brand-gray border-b border-black/10">
+                  <th class="text-left py-2 font-medium">Size</th>
+                  <th class="text-center py-2 font-medium">Chest</th>
+                  <th class="text-center py-2 font-medium">Length</th>
+                  <th class="text-center py-2 font-medium">Sleeve</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-black/5"><td class="py-2">XS</td><td class="text-center">86</td><td class="text-center">66</td><td class="text-center">19</td></tr>
+                <tr class="border-b border-black/5"><td class="py-2">S</td><td class="text-center">91</td><td class="text-center">69</td><td class="text-center">20</td></tr>
+                <tr class="border-b border-black/5"><td class="py-2">M</td><td class="text-center">97</td><td class="text-center">72</td><td class="text-center">21</td></tr>
+                <tr class="border-b border-black/5"><td class="py-2">L</td><td class="text-center">102</td><td class="text-center">74</td><td class="text-center">22</td></tr>
+                <tr class="border-b border-black/5"><td class="py-2">XL</td><td class="text-center">107</td><td class="text-center">76</td><td class="text-center">23</td></tr>
+                <tr><td class="py-2">XXL</td><td class="text-center">112</td><td class="text-center">78</td><td class="text-center">24</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Quantity + Add to Cart -->
+          <div class="flex items-center gap-4 mb-6">
+            <!-- Quantity -->
+            <div class="flex items-center">
+              <button class="qty-btn rounded-l-md text-[16px]" onclick="changeQty(-1)">−</button>
+              <div class="w-12 h-[36px] flex items-center justify-center border-t border-b border-black/15 text-[13px] font-semibold" id="qty-display">1</div>
+              <button class="qty-btn rounded-r-md text-[16px]" onclick="changeQty(1)">+</button>
+            </div>
+            <!-- Add to Cart -->
+            <button class="flex-1 btn-rainbow text-white text-[13px] font-semibold uppercase tracking-wider py-3.5 rounded-full hover:opacity-90 transition-opacity" onclick="addToCart()">
+              Add to Cart — $<span id="total-price">21.99</span>
+            </button>
+          </div>
+
+          <!-- Buy Now -->
+          <button class="w-full bg-brand-black text-white text-[13px] font-semibold uppercase tracking-wider py-3.5 rounded-full hover:bg-brand-dark transition-colors mb-8">
+            Buy It Now
+          </button>
+
+          <!-- Trust badges -->
+          <div class="grid grid-cols-3 gap-3 mb-8">
+            <div class="bg-brand-light/80 rounded-xl p-4 text-center">
+              <svg class="w-6 h-6 mx-auto mb-2 text-brand-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+              </svg>
+              <span class="text-[11px] font-semibold text-brand-black block">Free Shipping</span>
+              <span class="text-[10px] text-brand-gray">Orders $50+</span>
+            </div>
+            <div class="bg-brand-light/80 rounded-xl p-4 text-center">
+              <svg class="w-6 h-6 mx-auto mb-2 text-brand-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/>
+              </svg>
+              <span class="text-[11px] font-semibold text-brand-black block">30-Day Returns</span>
+              <span class="text-[10px] text-brand-gray">Hassle-free</span>
+            </div>
+            <div class="bg-brand-light/80 rounded-xl p-4 text-center">
+              <svg class="w-6 h-6 mx-auto mb-2 text-brand-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+              </svg>
+              <span class="text-[11px] font-semibold text-brand-black block">100% Cotton</span>
+              <span class="text-[10px] text-brand-gray">Premium quality</span>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="h-px bg-black/8 mb-8"></div>
+
+          <!-- Accordion Details -->
+          <div class="space-y-0">
+            <!-- Description -->
+            <div class="border-b border-black/8">
+              <div class="accordion-trigger open flex items-center justify-between py-4" onclick="toggleAccordion(this)">
+                <span class="text-[13px] font-semibold tracking-wide uppercase">Description</span>
+                <span class="accordion-icon text-[18px] leading-none font-light text-brand-gray">+</span>
+              </div>
+              <div class="accordion-content open pb-5">
+                <p class="text-[13px] text-brand-gray leading-[1.8] mb-4">
+                  When the fish calls, you answer. This premium meme tee features the iconic "Fih Is Calling" design that'll have everyone in the room doing a double take. Printed on heavyweight 100% organic cotton with a relaxed, unisex fit.
+                </p>
+                <ul class="space-y-2 text-[12px] text-brand-gray">
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Premium 220gsm organic cotton
+                  </li>
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    DTG printed — won't crack or fade
+                  </li>
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Relaxed unisex fit
+                  </li>
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Pre-shrunk — true to size
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Shipping -->
+            <div class="border-b border-black/8">
+              <div class="accordion-trigger flex items-center justify-between py-4" onclick="toggleAccordion(this)">
+                <span class="text-[13px] font-semibold tracking-wide uppercase">Shipping & Returns</span>
+                <span class="accordion-icon text-[18px] leading-none font-light text-brand-gray">+</span>
+              </div>
+              <div class="accordion-content pb-5">
+                <div class="text-[13px] text-brand-gray leading-[1.8] space-y-3">
+                  <p><strong class="text-brand-black font-semibold">Shipping</strong> — Orders ship within 2-4 business days. Free on orders over $50.</p>
+                  <p><strong class="text-brand-black font-semibold">Returns</strong> — 30-day hassle-free returns. Unworn with tags attached.</p>
+                  <p><strong class="text-brand-black font-semibold">Delivery</strong> — EU 5-8 days &bull; UK 7-10 days &bull; Worldwide 10-15 days</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Care -->
+            <div class="border-b border-black/8">
+              <div class="accordion-trigger flex items-center justify-between py-4" onclick="toggleAccordion(this)">
+                <span class="text-[13px] font-semibold tracking-wide uppercase">Care Instructions</span>
+                <span class="accordion-icon text-[18px] leading-none font-light text-brand-gray">+</span>
+              </div>
+              <div class="accordion-content pb-5">
+                <ul class="space-y-2 text-[13px] text-brand-gray leading-[1.8]">
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Machine wash cold, inside out
+                  </li>
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Do not bleach or tumble dry
+                  </li>
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Iron on low heat, avoid print area
+                  </li>
+                  <li class="flex items-center gap-2.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
+                    Hang dry for best results
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews -->
+  <section id="reviews" class="py-16 px-6 relative overflow-hidden">
+    <div class="section-blob" style="width:400px;height:400px;background:rgba(231,76,60,0.12);top:-80px;left:-100px;animation-delay:-4s;"></div>
+    <div class="max-w-6xl mx-auto relative z-[1]">
+      <h2 class="text-center mb-10 fade-up">
+        <span class="text-xl md:text-2xl font-semibold tracking-tight rainbow-text rainbow-underline">Customer Reviews</span>
+      </h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 fade-up">
+        <!-- Left: Rating Summary -->
+        <div class="lg:col-span-1">
+          <div class="text-center lg:text-left mb-6">
+            <div class="text-5xl font-bold mb-2">4.0</div>
+            <div class="flex items-center justify-center lg:justify-start gap-1 mb-2">
+              <svg class="w-5 h-5 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 text-[#d5d5d5]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-[12px] text-brand-gray">Based on 127 reviews</p>
+          </div>
+
+          <!-- Rating bars -->
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 text-[12px]">
+              <span class="text-brand-gray w-4 text-right">5</span>
+              <div class="flex-1 h-2 bg-black/5 rounded-full overflow-hidden"><div class="review-bar-fill h-full bg-[#f39c12] rounded-full" style="width:45%"></div></div>
+              <span class="text-brand-gray w-7 text-right">57</span>
+            </div>
+            <div class="flex items-center gap-3 text-[12px]">
+              <span class="text-brand-gray w-4 text-right">4</span>
+              <div class="flex-1 h-2 bg-black/5 rounded-full overflow-hidden"><div class="review-bar-fill h-full bg-[#f39c12] rounded-full" style="width:28%"></div></div>
+              <span class="text-brand-gray w-7 text-right">36</span>
+            </div>
+            <div class="flex items-center gap-3 text-[12px]">
+              <span class="text-brand-gray w-4 text-right">3</span>
+              <div class="flex-1 h-2 bg-black/5 rounded-full overflow-hidden"><div class="review-bar-fill h-full bg-[#f39c12] rounded-full" style="width:15%"></div></div>
+              <span class="text-brand-gray w-7 text-right">19</span>
+            </div>
+            <div class="flex items-center gap-3 text-[12px]">
+              <span class="text-brand-gray w-4 text-right">2</span>
+              <div class="flex-1 h-2 bg-black/5 rounded-full overflow-hidden"><div class="review-bar-fill h-full bg-[#f39c12] rounded-full" style="width:8%"></div></div>
+              <span class="text-brand-gray w-7 text-right">10</span>
+            </div>
+            <div class="flex items-center gap-3 text-[12px]">
+              <span class="text-brand-gray w-4 text-right">1</span>
+              <div class="flex-1 h-2 bg-black/5 rounded-full overflow-hidden"><div class="review-bar-fill h-full bg-[#f39c12] rounded-full" style="width:4%"></div></div>
+              <span class="text-brand-gray w-7 text-right">5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Individual Reviews -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Review 1 -->
+          <div class="border-b border-black/8 pb-6">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center text-white text-[11px] font-bold">MK</div>
+                <div>
+                  <p class="text-[13px] font-semibold">Marko K.</p>
+                  <div class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] bg-green-100 text-green-700 font-medium px-2 py-0.5 rounded-full">Verified Buyer</span>
+                <span class="text-[11px] text-brand-gray">2 weeks ago</span>
+              </div>
+            </div>
+            <p class="text-[13px] font-semibold mb-1">Absolutely hilarious — everyone asks about it</p>
+            <p class="text-[13px] text-brand-gray leading-relaxed">The quality is insane for the price. Cotton feels thick and premium, print is crispy. Wore it to a party and had at least 5 people ask where I got it. Sizing runs slightly oversized which I love. Already ordering two more designs.</p>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="border-b border-black/8 pb-6">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center text-white text-[11px] font-bold">SL</div>
+                <div>
+                  <p class="text-[13px] font-semibold">Sophie L.</p>
+                  <div class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#d5d5d5]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] bg-green-100 text-green-700 font-medium px-2 py-0.5 rounded-full">Verified Buyer</span>
+                <span class="text-[11px] text-brand-gray">1 month ago</span>
+              </div>
+            </div>
+            <p class="text-[13px] font-semibold mb-1">Great gift idea</p>
+            <p class="text-[13px] text-brand-gray leading-relaxed">Bought this for my boyfriend's birthday and he literally hasn't taken it off since. The print quality is way better than expected. Shipping to Germany took about a week. Would definitely recommend.</p>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-teal-400 flex items-center justify-center text-white text-[11px] font-bold">JR</div>
+                <div>
+                  <p class="text-[13px] font-semibold">Jake R.</p>
+                  <div class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#f39c12]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#d5d5d5]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-3 h-3 text-[#d5d5d5]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <span class="text-[11px] text-brand-gray">3 months ago</span>
+            </div>
+            <p class="text-[13px] font-semibold mb-1">Good but runs big</p>
+            <p class="text-[13px] text-brand-gray leading-relaxed">The meme print is spot on and the cotton quality is really nice. Only reason for 3 stars is that it runs pretty oversized — I'm usually an L and should have gotten M. Check the size guide! Other than that, solid purchase.</p>
+          </div>
+
+          <button class="text-[13px] font-semibold text-brand-black underline hover:text-brand-gray transition-colors">
+            View all 127 reviews →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- You May Also Like -->
+  <section class="py-16 px-6 relative overflow-hidden">
+    <div class="section-blob" style="width:500px;height:500px;background:rgba(46,204,113,0.14);top:-80px;right:-120px;animation-delay:-8s;"></div>
+    <div class="section-blob" style="width:400px;height:400px;background:rgba(52,152,219,0.12);bottom:-100px;left:-100px;animation-delay:-3s;"></div>
+    <div class="max-w-6xl mx-auto relative z-[1]">
+      <h2 class="text-center mb-10 fade-up">
+        <span class="text-xl md:text-2xl font-semibold tracking-tight rainbow-text rainbow-underline">You May Also Like</span>
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+        <a href="#" class="product-card group fade-up">
+          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
+            <img src="imgs/meme2.jpg" alt="I Love Timothee Chalamet Tee" class="product-img w-full h-full object-cover object-center" />
+          </div>
+          <h3 class="text-[13px] font-medium leading-snug mb-1">"I Love Timoth&eacute;e Chalamet" Tee</h3>
+          <div class="flex items-center gap-2">
+            <span class="text-[13px] font-semibold">$24.99</span>
+            <span class="text-[12px] text-brand-gray line-through">$33.32</span>
+          </div>
+        </a>
+        <a href="#" class="product-card group fade-up">
+          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
+            <img src="imgs/meme5.jpg" alt="Don't Worry Kitten Tee" class="product-img w-full h-full object-cover object-center" />
+          </div>
+          <h3 class="text-[13px] font-medium leading-snug mb-1">"Don't Worry Kitten" Wolf Tee</h3>
+          <div class="flex items-center gap-2">
+            <span class="text-[13px] font-semibold">$22.49</span>
+            <span class="text-[12px] text-brand-gray line-through">$29.99</span>
+          </div>
+        </a>
+        <a href="#" class="product-card group fade-up">
+          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
+            <img src="imgs/meme7.jpg" alt="The Wock Tee" class="product-img w-full h-full object-cover object-center" />
+          </div>
+          <h3 class="text-[13px] font-medium leading-snug mb-1">"The Wock" Meme Tee</h3>
+          <div class="flex items-center gap-2">
+            <span class="text-[13px] font-semibold">$27.23</span>
+            <span class="text-[12px] text-brand-gray line-through">$36.31</span>
+          </div>
+        </a>
+        <a href="#" class="product-card group fade-up">
+          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
+            <img src="imgs/meme8.jpg" alt="Tel Aviv Impressed Tee" class="product-img w-full h-full object-cover object-center" />
+          </div>
+          <h3 class="text-[13px] font-medium leading-snug mb-1">"Tel Aviv Impressed" Meme Tee</h3>
+          <div class="flex items-center gap-2">
+            <span class="text-[13px] font-semibold">$25.49</span>
+            <span class="text-[12px] text-brand-gray line-through">$33.99</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="h-[2px] bg-gradient-to-r from-purple-600 via-red-500 via-orange-400 via-green-500 to-blue-500"></div>
+  <footer id="contact" class="bg-brand-black text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
+        <div class="md:col-span-1">
+          <a href="index.html" class="flex items-center gap-0.5 mb-4">
+            <span class="logo-p text-2xl font-bold leading-none">P</span>
+            <span class="text-[15px] font-semibold tracking-tight text-white">retrendy</span>
+          </a>
+          <p class="text-[13px] text-white/50 leading-relaxed">Trend before it trends.</p>
+        </div>
+        <div>
+          <h4 class="text-[11px] font-medium uppercase tracking-[0.2em] text-white/40 mb-5">Shop</h4>
+          <ul class="space-y-3">
+            <li><a href="index.html#products" class="text-[13px] text-white/70 hover:text-white transition-colors">All Products</a></li>
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">New Arrivals</a></li>
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">Best Sellers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-[11px] font-medium uppercase tracking-[0.2em] text-white/40 mb-5">Help</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">Contact Us</a></li>
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">Shipping & Returns</a></li>
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-[11px] font-medium uppercase tracking-[0.2em] text-white/40 mb-5">Legal</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">Terms & Conditions</a></li>
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="text-[13px] text-white/70 hover:text-white transition-colors">Refund Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-[12px] text-white/30">&copy; 2026 Pretrendy. All rights reserved.</p>
+        <div class="flex items-center gap-5">
+          <a href="https://instagram.com/pretrendy" target="_blank" rel="noopener" class="text-white/30 hover:text-white transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast fixed bottom-6 right-6 z-50 bg-brand-black text-white rounded-xl shadow-2xl px-6 py-4 flex items-center gap-4 max-w-sm" id="toast">
+    <div class="w-10 h-10 rounded-lg overflow-hidden bg-brand-light shrink-0">
+      <img src="imgs/meme1.jpg" alt="" class="w-full h-full object-cover" />
+    </div>
+    <div>
+      <p class="text-[13px] font-semibold">Added to cart!</p>
+      <p class="text-[11px] text-white/60" id="toast-details">Size M &bull; Black &bull; 1x</p>
+    </div>
+    <div class="rainbow-glow w-full h-[2px] absolute bottom-0 left-0 rounded-b-xl"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Image gallery
+    function switchImage(thumb, src) {
+      document.getElementById('main-image').src = src;
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+
+    // Image zoom follow mouse
+    const wrap = document.getElementById('main-image-wrap');
+    const mainImg = document.getElementById('main-image');
+    wrap.addEventListener('mousemove', (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      mainImg.style.transformOrigin = `${x}% ${y}%`;
+    });
+
+    // Color selector
+    function selectColor(dot, name) {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+      dot.classList.add('selected');
+      document.getElementById('color-name').textContent = name;
+    }
+
+    // Size selector
+    let selectedSize = 'M';
+    function selectSize(btn, size) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSize = size;
+    }
+
+    // Quantity
+    let qty = 1;
+    const basePrice = 21.99;
+    function changeQty(delta) {
+      qty = Math.max(1, Math.min(10, qty + delta));
+      document.getElementById('qty-display').textContent = qty;
+      document.getElementById('total-price').textContent = (basePrice * qty).toFixed(2);
+    }
+
+    // Accordion
+    function toggleAccordion(trigger) {
+      const content = trigger.nextElementSibling;
+      const isOpen = content.classList.contains('open');
+      // Close all first
+      document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+      document.querySelectorAll('.accordion-trigger').forEach(t => t.classList.remove('open'));
+      // Toggle clicked
+      if (!isOpen) {
+        content.classList.add('open');
+        trigger.classList.add('open');
+      }
+    }
+
+    // Wishlist
+    let wishlistCount = 0;
+    function toggleWishlist(btn) {
+      btn.classList.toggle('active');
+      if (btn.classList.contains('active')) {
+        wishlistCount++;
+      } else {
+        wishlistCount = Math.max(0, wishlistCount - 1);
+      }
+      const navCount = document.getElementById('nav-wishlist-count');
+      navCount.textContent = wishlistCount;
+      if (wishlistCount > 0) {
+        navCount.classList.add('show');
+      } else {
+        navCount.classList.remove('show');
+      }
+    }
+    function toggleNavWishlist() {
+      // placeholder — would open wishlist drawer
+    }
+
+    // Share
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-details').textContent = 'Link copied to clipboard!';
+        document.querySelector('#toast p.text-\\[13px\\]').textContent = 'Copied!';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+          document.querySelector('#toast p.text-\\[13px\\]').textContent = 'Added to cart!';
+        }, 2000);
+      });
+    }
+    function shareTwitter() {
+      window.open('https://twitter.com/intent/tweet?text=Check%20out%20this%20meme%20tee%20from%20Pretrendy!&url=' + encodeURIComponent(window.location.href), '_blank');
+    }
+
+    // Add to cart
+    function addToCart() {
+      const count = document.getElementById('cart-count');
+      count.textContent = parseInt(count.textContent) + qty;
+      // Bounce animation on cart icon
+      const cartIcon = document.getElementById('cart-icon');
+      cartIcon.style.transform = 'scale(1.3)';
+      setTimeout(() => cartIcon.style.transform = 'scale(1)', 200);
+      // Toast
+      const colorName = document.getElementById('color-name').textContent;
+      document.getElementById('toast-details').textContent = `Size ${selectedSize} \u2022 ${colorName} \u2022 ${qty}x`;
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+
+</body>
+</html>
