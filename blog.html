@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pretrendy</title>
+  <title>Blog — Pretrendy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,7 +33,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
-    /* Rainbow blobs — inline in each section */
+    /* Rainbow blobs */
     .section-blob {
       position: absolute;
       border-radius: 50%;
@@ -46,14 +46,6 @@
       0% { transform: translate(0, 0) scale(1); }
       50% { transform: translate(30px, -20px) scale(1.1); }
       100% { transform: translate(-20px, 15px) scale(0.95); }
-    }
-
-    /* Product card — only subtle zoom, nothing else */
-    .product-card img.product-img {
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .product-card:hover img.product-img {
-      transform: scale(1.04);
     }
 
     /* Social bar */
@@ -113,35 +105,6 @@
       animation: rainbow-shift 4s linear infinite;
     }
 
-    /* Carousel */
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-    .carousel-slide.active {
-      opacity: 1;
-    }
-
-    /* Category card */
-    .cat-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1.5px solid transparent;
-    }
-    .cat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      border-image: linear-gradient(135deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db) 1;
-      border-radius: 0;
-    }
-    .cat-card img {
-      transition: transform 0.4s ease;
-    }
-    .cat-card:hover img {
-      transform: scale(1.08);
-    }
-
     /* Animated rainbow text */
     .rainbow-text {
       background: linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db, #9b59b6);
@@ -169,17 +132,16 @@
       border-radius: 2px;
     }
 
-    /* Pretrendy overlay text on distracted meme */
-    .pretrendy-overlay-text {
-      background: linear-gradient(135deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 900;
-      font-size: 52px;
-      letter-spacing: -0.03em;
-      text-shadow: none;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    /* Blog card hover lift (like cat-cards) */
+    .blog-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1.5px solid transparent;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-image: linear-gradient(135deg, #9b59b6, #e74c3c, #f39c12, #2ecc71, #3498db) 1;
+      border-radius: 0;
     }
   </style>
 </head>
@@ -197,8 +159,8 @@
     </div>
   </div>
 
-  <!-- Social Bar — Fixed Right (hidden on mobile) -->
-  <div class="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-4 px-4 py-6">
+  <!-- Social Bar — Fixed Right -->
+  <div class="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-4 px-4 py-6">
     <a href="https://instagram.com/pretrendy" target="_blank" rel="noopener"
        class="group flex flex-col items-center gap-3">
       <span class="social-bar text-[11px] font-medium tracking-[0.2em] uppercase text-brand-gray group-hover:text-brand-black transition-colors">
@@ -215,7 +177,7 @@
   <nav class="fixed top-[28px] left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
       <!-- Logo -->
-      <a href="/" class="flex items-center hover:scale-105 transition-transform duration-200">
+      <a href="index.html" class="flex items-center hover:scale-105 transition-transform duration-200">
         <img src="imgs/logo_new2_transparent.png" alt="Pretrendy" class="h-20 w-auto object-contain translate-y-[2px]" />
       </a>
 
@@ -295,288 +257,175 @@
   </div>
 
   <!-- Sub-nav bar -->
-  <div class="fixed top-[84px] left-0 right-0 z-30 bg-brand-light/90 backdrop-blur-sm border-b border-black/5 overflow-x-auto">
-    <div class="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-start md:justify-center gap-5 md:gap-8 h-9 min-w-max md:min-w-0">
-      <a href="shop.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-black hover:text-brand-gray transition-colors">Products</a>
-      <a href="#products" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Hot</a>
-      <a href="blog.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Blog</a>
+  <div class="fixed top-[84px] left-0 right-0 z-30 bg-brand-light/90 backdrop-blur-sm border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-center gap-8 h-9">
+      <a href="shop.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Products</a>
+      <a href="index.html#products" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Hot</a>
+      <a href="blog.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-black hover:text-brand-gray transition-colors">Blog</a>
       <a href="delivery.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Delivery</a>
       <a href="contact.html" class="text-[11px] font-medium uppercase tracking-[0.1em] text-brand-gray hover:text-brand-black transition-colors">Contact</a>
     </div>
   </div>
 
-  <!-- Hero Carousel -->
-  <section class="pt-[120px]">
-    <div class="relative w-full h-[50vh] min-h-[320px] overflow-hidden" id="hero-carousel">
-
-      <!-- Slide 1: Logo -->
-      <div class="carousel-slide active bg-brand-light flex items-center justify-center">
-        <img src="assets/logo-hero.png" alt="Pretrendy"
-             class="max-w-[400px] w-[50%] object-contain select-none"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <div style="display:none" class="text-center">
-          <h1 class="text-7xl md:text-9xl font-bold bg-gradient-to-r from-purple-600 via-red-500 via-orange-400 via-yellow-400 via-green-500 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-            Pretrendy
-          </h1>
-        </div>
-      </div>
-
-      <!-- Slide 2: Brand showcase -->
-      <div class="carousel-slide">
-        <img src="imgs/cover photo.jpg" alt="Prëtrendý brand showcase"
-             class="w-full h-full object-contain object-center bg-white" />
-      </div>
-
-      <!-- Carousel dots -->
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        <button class="carousel-dot w-2.5 h-2.5 rounded-full transition-all" data-slide="0" style="background: linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12);"></button>
-        <button class="carousel-dot w-2 h-2 rounded-full bg-brand-black/20 transition-all" data-slide="1"></button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Categories -->
-  <section class="py-12 px-6 relative overflow-hidden">
+  <!-- Blog Header -->
+  <section class="pt-[140px] pb-12 px-6 relative overflow-hidden">
     <div class="section-blob" style="width:500px;height:500px;background:rgba(155,89,182,0.18);top:-100px;left:-150px;"></div>
     <div class="section-blob" style="width:400px;height:400px;background:rgba(231,76,60,0.14);bottom:-80px;right:-100px;animation-delay:-5s;"></div>
-    <div class="max-w-4xl mx-auto relative z-[1]">
-      <h2 class="text-center mb-10 fade-up">
-        <span class="text-2xl md:text-3xl font-semibold tracking-tight rainbow-text rainbow-underline">Shop by Category</span>
-      </h2>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-
-        <!-- T-Shirts -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/shirt.jpg" alt="T-Shirts" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">T-Shirts</h3>
-          </div>
-        </a>
-
-        <!-- Hoodies -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/hoodies.jpg" alt="Hoodies" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Hoodies</h3>
-          </div>
-        </a>
-
-        <!-- Pullovers -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/pullover.jpg" alt="Pullovers" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Pullovers</h3>
-          </div>
-        </a>
-
-        <!-- Dresses -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/dress.jpg" alt="Dresses" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Dresses</h3>
-          </div>
-        </a>
-
-        <!-- Caps -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/cap.jpg" alt="Caps" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Caps</h3>
-          </div>
-        </a>
-
-        <!-- Phone Cases -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/phone-case.jpg" alt="Phone Cases" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Phone Cases</h3>
-          </div>
-        </a>
-
-        <!-- Stickers -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/stickers.jpg" alt="Stickers" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Stickers</h3>
-          </div>
-        </a>
-
-        <!-- Accessories -->
-        <a href="shop.html" class="cat-card rounded-lg overflow-hidden fade-up">
-          <div class="aspect-square overflow-hidden bg-brand-light">
-            <img src="imgs/Cattegories/accesaries.jpg" alt="Accessories" class="w-full h-full object-cover" />
-          </div>
-          <div class="py-2 px-1 text-center">
-            <h3 class="text-[12px] font-semibold leading-tight">Accessories</h3>
-          </div>
-        </a>
-
-      </div>
+    <div class="max-w-4xl mx-auto text-center relative z-[1] fade-up">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+        <span class="rainbow-text">Blog</span>
+      </h1>
+      <p class="text-[15px] text-brand-gray max-w-lg mx-auto">Stories, style tips, and the latest from the world of meme fashion.</p>
     </div>
   </section>
 
-  <!-- Products -->
-  <section id="products" class="py-20 px-6 relative overflow-hidden">
+  <!-- Featured Post -->
+  <section class="px-6 pb-16 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto relative z-[1]">
+      <a href="#" class="blog-card group block rounded-lg overflow-hidden fade-up">
+        <div class="grid md:grid-cols-2 gap-0">
+          <!-- Image -->
+          <div class="aspect-[3/2] md:aspect-auto bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-red-500/5 to-blue-500/10"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-16 h-16 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <!-- Content -->
+          <div class="p-8 md:p-10 flex flex-col justify-center bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-purple-600 mb-3">Featured</span>
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-3 group-hover:text-brand-gray transition-colors">How Meme Fashion Took Over 2026</h2>
+            <p class="text-[13px] text-brand-gray mb-4 leading-relaxed">From niche internet humor to mainstream streetwear, meme-inspired fashion has become the defining trend of 2026. We explore how viral culture is reshaping the way we dress and express ourselves.</p>
+            <div class="flex items-center gap-3">
+              <span class="text-[11px] text-brand-gray/60">March 15, 2026</span>
+              <span class="text-brand-gray/30">&bull;</span>
+              <span class="text-[11px] text-brand-gray/60">8 min read</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="px-6 pb-20 relative overflow-hidden">
     <div class="section-blob" style="width:550px;height:550px;background:rgba(243,156,18,0.16);top:-80px;right:-120px;animation-delay:-3s;"></div>
     <div class="section-blob" style="width:500px;height:500px;background:rgba(46,204,113,0.15);bottom:-100px;left:-130px;animation-delay:-8s;"></div>
-    <div class="max-w-7xl mx-auto relative z-[1]">
-      <h2 class="text-center mb-12 fade-up">
-        <span class="text-2xl md:text-3xl font-semibold tracking-tight rainbow-text rainbow-underline">Hot Products</span>
-      </h2>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-12">
-
-        <!-- Product 1: Fih Calling -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme1.jpg" alt="Fih Is Calling Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"Fih Is Calling" Meme Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;21.99</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;29.32</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 2: I Love Timothee Chalamet -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme2.jpg" alt="I Love Timothee Chalamet Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"I Love Timoth&eacute;e Chalamet" Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;24.99</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;33.32</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 3: Whatever Daddy Wants -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme3.jpg" alt="Whatever Daddy Wants Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"Whatever Daddy Wants" Wolf Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;22.49</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;29.99</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 4: Microplastics Cat -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme4.jpg" alt="Microplastics Cat Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"I Have Microplastics In My Body" Cat Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;19.99</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;26.65</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 5: Don't Worry Kitten -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme5.jpg" alt="Don't Worry Kitten Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"Don't Worry Kitten" Wolf Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;22.49</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;29.99</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 6: It's Britney -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme6.jpg" alt="It's Britney Bitch Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"It's Britney" Office Meme Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;23.99</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;31.99</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 7: The Wock -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme7.jpg" alt="The Wock Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"The Wock" Meme Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;27.23</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;36.31</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-        <!-- Product 8: Tel Aviv Impressed -->
-        <a href="product.html" class="product-card group fade-up">
-          <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-4">
-            <img src="imgs/meme8.jpg" alt="Tel Aviv Impressed Tee" class="product-img w-full h-full object-cover object-center" />
-          </div>
-          <h3 class="text-[13px] font-medium leading-snug mb-1">"Tel Aviv Impressed" Meme Tee</h3>
-          <div class="flex items-center gap-2">
-            <span class="text-[13px] font-semibold">&#8364;25.49</span>
-            <span class="text-[12px] text-brand-gray line-through">&#8364;33.99</span>
-            <span class="text-[11px] text-red-500 font-medium">25% off</span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Instagram Feed -->
-  <section class="py-16 px-6 relative overflow-hidden">
-    <div class="section-blob" style="width:450px;height:450px;background:rgba(52,152,219,0.17);top:-60px;left:-100px;animation-delay:-6s;"></div>
-    <div class="section-blob" style="width:400px;height:400px;background:rgba(155,89,182,0.14);bottom:-80px;right:-80px;animation-delay:-10s;"></div>
     <div class="max-w-5xl mx-auto relative z-[1]">
-      <h2 class="text-center mb-10 fade-up">
-        <span class="text-2xl md:text-3xl font-semibold tracking-tight rainbow-text rainbow-underline">Our Merch in the Wild</span>
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <!-- Post 1 -->
-        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DR72UDxkyyC/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); margin:0; max-width:100%; min-width:100%; padding:0; width:100%;">
-          <a href="https://www.instagram.com/p/DR72UDxkyyC/" target="_blank" rel="noopener" class="block text-center py-16 text-brand-gray text-[13px] hover:text-brand-black transition-colors">View on Instagram</a>
-        </blockquote>
+        <!-- Card 1 -->
+        <a href="#" class="blog-card group rounded-lg overflow-hidden fade-up">
+          <div class="aspect-[3/2] bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-red-500/8 via-orange-400/5 to-yellow-400/8"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-10 h-10 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="p-5 bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-red-500 mb-2 block">Trending</span>
+            <h3 class="text-[15px] font-semibold leading-snug mb-2 group-hover:text-brand-gray transition-colors">Top 10 Meme Tees This Month</h3>
+            <p class="text-[12px] text-brand-gray/60 mb-3">March 10, 2026</p>
+            <span class="text-[12px] font-medium text-brand-black group-hover:text-brand-gray transition-colors">Read more &rarr;</span>
+          </div>
+        </a>
 
-        <!-- Post 2 -->
-        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DQHFNhujYy6/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); margin:0; max-width:100%; min-width:100%; padding:0; width:100%;">
-          <a href="https://www.instagram.com/p/DQHFNhujYy6/" target="_blank" rel="noopener" class="block text-center py-16 text-brand-gray text-[13px] hover:text-brand-black transition-colors">View on Instagram</a>
-        </blockquote>
+        <!-- Card 2 -->
+        <a href="#" class="blog-card group rounded-lg overflow-hidden fade-up">
+          <div class="aspect-[3/2] bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-500/8 via-purple-400/5 to-indigo-400/8"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-10 h-10 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="p-5 bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-blue-500 mb-2 block">Behind the Scenes</span>
+            <h3 class="text-[15px] font-semibold leading-snug mb-2 group-hover:text-brand-gray transition-colors">Behind the Designs: Our Creative Process</h3>
+            <p class="text-[12px] text-brand-gray/60 mb-3">March 5, 2026</p>
+            <span class="text-[12px] font-medium text-brand-black group-hover:text-brand-gray transition-colors">Read more &rarr;</span>
+          </div>
+        </a>
 
-        <!-- Post 3 -->
-        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/CFcrfgpleoF/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); margin:0; max-width:100%; min-width:100%; padding:0; width:100%;">
-          <a href="https://www.instagram.com/p/CFcrfgpleoF/" target="_blank" rel="noopener" class="block text-center py-16 text-brand-gray text-[13px] hover:text-brand-black transition-colors">View on Instagram</a>
-        </blockquote>
+        <!-- Card 3 -->
+        <a href="#" class="blog-card group rounded-lg overflow-hidden fade-up">
+          <div class="aspect-[3/2] bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-green-500/8 via-teal-400/5 to-emerald-400/8"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-10 h-10 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="p-5 bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-green-600 mb-2 block">Style Guide</span>
+            <h3 class="text-[15px] font-semibold leading-snug mb-2 group-hover:text-brand-gray transition-colors">Streetwear x Memes: The Perfect Combo</h3>
+            <p class="text-[12px] text-brand-gray/60 mb-3">February 28, 2026</p>
+            <span class="text-[12px] font-medium text-brand-black group-hover:text-brand-gray transition-colors">Read more &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Card 4 -->
+        <a href="#" class="blog-card group rounded-lg overflow-hidden fade-up">
+          <div class="aspect-[3/2] bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-orange-500/8 via-amber-400/5 to-yellow-400/8"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-10 h-10 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="p-5 bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-orange-500 mb-2 block">Tips</span>
+            <h3 class="text-[15px] font-semibold leading-snug mb-2 group-hover:text-brand-gray transition-colors">How to Style Your Meme Tee</h3>
+            <p class="text-[12px] text-brand-gray/60 mb-3">February 20, 2026</p>
+            <span class="text-[12px] font-medium text-brand-black group-hover:text-brand-gray transition-colors">Read more &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Card 5 -->
+        <a href="#" class="blog-card group rounded-lg overflow-hidden fade-up">
+          <div class="aspect-[3/2] bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-teal-500/8 via-green-400/5 to-lime-400/8"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-10 h-10 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="p-5 bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-teal-600 mb-2 block">Sustainability</span>
+            <h3 class="text-[15px] font-semibold leading-snug mb-2 group-hover:text-brand-gray transition-colors">Sustainable Fashion at Pretrendy</h3>
+            <p class="text-[12px] text-brand-gray/60 mb-3">February 12, 2026</p>
+            <span class="text-[12px] font-medium text-brand-black group-hover:text-brand-gray transition-colors">Read more &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Card 6 -->
+        <a href="#" class="blog-card group rounded-lg overflow-hidden fade-up">
+          <div class="aspect-[3/2] bg-brand-light relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/8 via-pink-400/5 to-fuchsia-400/8"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-10 h-10 text-brand-gray/20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="p-5 bg-white">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-purple-500 mb-2 block">Culture</span>
+            <h3 class="text-[15px] font-semibold leading-snug mb-2 group-hover:text-brand-gray transition-colors">Meme Culture: From Internet to Wardrobe</h3>
+            <p class="text-[12px] text-brand-gray/60 mb-3">February 5, 2026</p>
+            <span class="text-[12px] font-medium text-brand-black group-hover:text-brand-gray transition-colors">Read more &rarr;</span>
+          </div>
+        </a>
 
       </div>
     </div>
-    <script async src="//www.instagram.com/embed.js"></script>
   </section>
 
   <!-- Newsletter -->
@@ -587,7 +436,7 @@
       <div class="w-10 h-0.5 mx-auto mb-6 bg-gradient-to-r from-purple-500 via-red-500 via-orange-400 via-green-500 to-blue-500 rounded-full"></div>
       <h2 class="text-2xl md:text-3xl font-semibold tracking-tight mb-3">Stay ahead of the trend</h2>
       <p class="text-[14px] text-brand-gray mb-8">New drops, exclusive deals, and meme-worthy content. No spam.</p>
-      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault()">
+      <form class="flex gap-3 max-w-md mx-auto" onsubmit="event.preventDefault()">
         <input type="email" placeholder="Your email"
                class="flex-1 bg-white border border-black/10 rounded-full px-5 py-3 text-[13px] text-brand-black placeholder-brand-gray/50 outline-none focus:border-black/30 transition-colors" />
         <button type="submit"
@@ -606,7 +455,7 @@
 
         <!-- Brand -->
         <div class="md:col-span-1">
-          <a href="/" class="flex items-center gap-0.5 mb-4">
+          <a href="index.html" class="flex items-center gap-0.5 mb-4">
             <span class="logo-p text-2xl font-bold leading-none">P</span>
             <span class="text-[15px] font-semibold tracking-tight text-white">retrendy</span>
           </a>
@@ -672,33 +521,6 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // Hero carousel — 6 second auto-rotate
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.carousel-dot');
-    let current = 0;
-
-    function goToSlide(index) {
-      slides[current].classList.remove('active');
-      dots[current].style.background = '';
-      dots[current].classList.add('bg-brand-black/20');
-      dots[current].classList.remove('w-2.5', 'h-2.5');
-      dots[current].classList.add('w-2', 'h-2');
-      current = index;
-      slides[current].classList.add('active');
-      dots[current].classList.remove('bg-brand-black/20');
-      dots[current].style.background = 'linear-gradient(90deg, #9b59b6, #e74c3c, #f39c12)';
-      dots[current].classList.remove('w-2', 'h-2');
-      dots[current].classList.add('w-2.5', 'h-2.5');
-    }
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => goToSlide(Number(dot.dataset.slide)));
-    });
-
-    setInterval(() => {
-      goToSlide((current + 1) % slides.length);
-    }, 6000);
 
     // Mobile menu
     function toggleMobileMenu() {
