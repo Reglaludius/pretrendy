@@ -525,109 +525,67 @@
             Buy It Now
           </button>
 
-          <!-- Trust badges -->
-          <div class="grid grid-cols-3 gap-3 mb-8">
-            <div class="bg-brand-light/80 rounded-xl p-4 text-center">
-              <svg class="w-6 h-6 mx-auto mb-2 text-brand-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
-              </svg>
-              <span class="text-[11px] font-semibold text-brand-black block">Free Shipping</span>
-              <span class="text-[10px] text-brand-gray">Orders $50+</span>
-            </div>
-            <div class="bg-brand-light/80 rounded-xl p-4 text-center">
-              <svg class="w-6 h-6 mx-auto mb-2 text-brand-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/>
-              </svg>
-              <span class="text-[11px] font-semibold text-brand-black block">30-Day Returns</span>
-              <span class="text-[10px] text-brand-gray">Hassle-free</span>
-            </div>
-            <div class="bg-brand-light/80 rounded-xl p-4 text-center">
-              <svg class="w-6 h-6 mx-auto mb-2 text-brand-black" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
-              </svg>
-              <span class="text-[11px] font-semibold text-brand-black block">100% Cotton</span>
-              <span class="text-[10px] text-brand-gray">Premium quality</span>
-            </div>
+          <!-- Trust badges row -->
+          <div class="flex items-center gap-6 mb-6 text-[11px] text-brand-gray">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+              Free Shipping $50+
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>
+              30-Day Returns
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+              100% Cotton
+            </span>
           </div>
 
           <!-- Divider -->
-          <div class="h-px bg-black/8 mb-8"></div>
+          <div class="h-px bg-black/8 mb-6"></div>
 
-          <!-- Accordion Details -->
-          <div class="space-y-0">
-            <!-- Description -->
-            <div class="border-b border-black/8">
-              <div class="accordion-trigger open flex items-center justify-between py-4" onclick="toggleAccordion(this)">
-                <span class="text-[13px] font-semibold tracking-wide uppercase">Description</span>
-                <span class="accordion-icon text-[18px] leading-none font-light text-brand-gray">+</span>
+          <!-- Description (always visible, no accordion) -->
+          <div class="mb-6">
+            <p class="text-[13px] text-brand-gray leading-[1.8] mb-4">
+              When the fish calls, you answer. This premium meme tee features the iconic "Fih Is Calling" design that'll have everyone in the room doing a double take. Printed on heavyweight 100% organic cotton with a relaxed, unisex fit.
+            </p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex items-center gap-2.5 text-[12px] text-brand-gray">
+                <span class="w-1 h-1 rounded-full bg-brand-black flex-shrink-0"></span>
+                Premium 220gsm organic cotton
               </div>
-              <div class="accordion-content open pb-5">
-                <p class="text-[13px] text-brand-gray leading-[1.8] mb-4">
-                  When the fish calls, you answer. This premium meme tee features the iconic "Fih Is Calling" design that'll have everyone in the room doing a double take. Printed on heavyweight 100% organic cotton with a relaxed, unisex fit.
-                </p>
-                <ul class="space-y-2 text-[12px] text-brand-gray">
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Premium 220gsm organic cotton
-                  </li>
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    DTG printed — won't crack or fade
-                  </li>
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Relaxed unisex fit
-                  </li>
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Pre-shrunk — true to size
-                  </li>
-                </ul>
+              <div class="flex items-center gap-2.5 text-[12px] text-brand-gray">
+                <span class="w-1 h-1 rounded-full bg-brand-black flex-shrink-0"></span>
+                DTG printed — won't crack or fade
+              </div>
+              <div class="flex items-center gap-2.5 text-[12px] text-brand-gray">
+                <span class="w-1 h-1 rounded-full bg-brand-black flex-shrink-0"></span>
+                Relaxed unisex fit
+              </div>
+              <div class="flex items-center gap-2.5 text-[12px] text-brand-gray">
+                <span class="w-1 h-1 rounded-full bg-brand-black flex-shrink-0"></span>
+                Pre-shrunk — true to size
               </div>
             </div>
+          </div>
 
-            <!-- Shipping -->
-            <div class="border-b border-black/8">
-              <div class="accordion-trigger flex items-center justify-between py-4" onclick="toggleAccordion(this)">
-                <span class="text-[13px] font-semibold tracking-wide uppercase">Shipping & Returns</span>
-                <span class="accordion-icon text-[18px] leading-none font-light text-brand-gray">+</span>
-              </div>
-              <div class="accordion-content pb-5">
-                <div class="text-[13px] text-brand-gray leading-[1.8] space-y-3">
-                  <p><strong class="text-brand-black font-semibold">Shipping</strong> — Orders ship within 2-4 business days. Free on orders over $50.</p>
-                  <p><strong class="text-brand-black font-semibold">Returns</strong> — 30-day hassle-free returns. Unworn with tags attached.</p>
-                  <p><strong class="text-brand-black font-semibold">Delivery</strong> — EU 5-8 days &bull; UK 7-10 days &bull; Worldwide 10-15 days</p>
-                </div>
-              </div>
+          <!-- Shipping & Care compact -->
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-brand-light/60 rounded-lg p-4">
+              <span class="text-[11px] font-semibold uppercase tracking-wide block mb-2">Shipping</span>
+              <p class="text-[11px] text-brand-gray leading-relaxed">Ships in 2-4 days. Free over $50.</p>
+              <p class="text-[11px] text-brand-gray leading-relaxed">EU 5-8 days &bull; UK 7-10 days</p>
             </div>
+            <div class="bg-brand-light/60 rounded-lg p-4">
+              <span class="text-[11px] font-semibold uppercase tracking-wide block mb-2">Care</span>
+              <p class="text-[11px] text-brand-gray leading-relaxed">Machine wash cold, inside out.</p>
+              <p class="text-[11px] text-brand-gray leading-relaxed">No bleach. Hang dry.</p>
+            </div>
+          </div>
 
-            <!-- Care -->
-            <div class="border-b border-black/8">
-              <div class="accordion-trigger flex items-center justify-between py-4" onclick="toggleAccordion(this)">
-                <span class="text-[13px] font-semibold tracking-wide uppercase">Care Instructions</span>
-                <span class="accordion-icon text-[18px] leading-none font-light text-brand-gray">+</span>
-              </div>
-              <div class="accordion-content pb-5">
-                <ul class="space-y-2 text-[13px] text-brand-gray leading-[1.8]">
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Machine wash cold, inside out
-                  </li>
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Do not bleach or tumble dry
-                  </li>
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Iron on low heat, avoid print area
-                  </li>
-                  <li class="flex items-center gap-2.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-black"></span>
-                    Hang dry for best results
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <!-- Returns note -->
+          <div class="bg-gradient-to-r from-brand-light/80 to-transparent rounded-lg px-4 py-3">
+            <p class="text-[11px] text-brand-gray"><strong class="text-brand-black font-semibold">30-day hassle-free returns</strong> — unworn with tags attached. No questions asked.</p>
           </div>
         </div>
 
