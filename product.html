@@ -553,15 +553,7 @@
           <!-- Divider -->
           <div class="h-px bg-black/8 mb-8"></div>
 
-        </div>
-
-      </div>
-
-      <!-- 50/50 Layout: Description Left, Suggested Products Right -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mt-12">
-
-        <!-- Left: Accordion Details -->
-        <div class="fade-up">
+          <!-- Accordion Details -->
           <div class="space-y-0">
             <!-- Description -->
             <div class="border-b border-black/8">
@@ -639,61 +631,53 @@
           </div>
         </div>
 
-        <!-- Right: You May Also Like (4 products in 2x2 grid) -->
-        <div class="fade-up">
-          <h3 class="text-[13px] font-semibold tracking-wide uppercase mb-4">You May Also Like</h3>
-          <div class="flex flex-col gap-3">
-            <a href="product.html" class="product-card group flex items-center gap-3">
-              <div class="relative w-16 h-16 flex-shrink-0 bg-brand-light rounded-sm overflow-hidden">
-                <img src="imgs/meme2.jpg" alt="I Love Timothee Chalamet Tee" class="product-img w-full h-full object-cover object-center" />
-              </div>
-              <div>
-                <h3 class="text-[11px] font-medium leading-snug">"I Love Timoth&eacute;e Chalamet" Tee</h3>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                  <span class="text-[11px] font-semibold">$24.99</span>
-                  <span class="text-[10px] text-brand-gray line-through">$33.32</span>
-                </div>
-              </div>
-            </a>
-            <a href="product.html" class="product-card group flex items-center gap-3">
-              <div class="relative w-16 h-16 flex-shrink-0 bg-brand-light rounded-sm overflow-hidden">
-                <img src="imgs/meme5.jpg" alt="Don't Worry Kitten Tee" class="product-img w-full h-full object-cover object-center" />
-              </div>
-              <div>
-                <h3 class="text-[11px] font-medium leading-snug">"Don't Worry Kitten" Wolf Tee</h3>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                  <span class="text-[11px] font-semibold">$22.49</span>
-                  <span class="text-[10px] text-brand-gray line-through">$29.99</span>
-                </div>
-              </div>
-            </a>
-            <a href="product.html" class="product-card group flex items-center gap-3">
-              <div class="relative w-16 h-16 flex-shrink-0 bg-brand-light rounded-sm overflow-hidden">
-                <img src="imgs/meme7.jpg" alt="The Wock Tee" class="product-img w-full h-full object-cover object-center" />
-              </div>
-              <div>
-                <h3 class="text-[11px] font-medium leading-snug">"The Wock" Meme Tee</h3>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                  <span class="text-[11px] font-semibold">$27.23</span>
-                  <span class="text-[10px] text-brand-gray line-through">$36.31</span>
-                </div>
-              </div>
-            </a>
-            <a href="product.html" class="product-card group flex items-center gap-3">
-              <div class="relative w-16 h-16 flex-shrink-0 bg-brand-light rounded-sm overflow-hidden">
-                <img src="imgs/meme8.jpg" alt="Tel Aviv Impressed Tee" class="product-img w-full h-full object-cover object-center" />
-              </div>
-              <div>
-                <h3 class="text-[11px] font-medium leading-snug">"Tel Aviv Impressed" Meme Tee</h3>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                  <span class="text-[11px] font-semibold">$25.49</span>
-                  <span class="text-[10px] text-brand-gray line-through">$33.99</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
+      </div>
 
+      <!-- You May Also Like — horizontal row below, aligned with left image column -->
+      <div class="mt-10 fade-up">
+        <h3 class="text-[13px] font-semibold tracking-wide uppercase mb-5">You May Also Like</h3>
+        <div class="grid grid-cols-4 gap-4">
+          <a href="product.html" class="product-card group">
+            <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-3">
+              <img src="imgs/meme2.jpg" alt="I Love Timothee Chalamet Tee" class="product-img w-full h-full object-cover object-center" />
+            </div>
+            <h3 class="text-[12px] font-medium leading-snug mb-1">"I Love Timoth&eacute;e Chalamet" Tee</h3>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[12px] font-semibold">$24.99</span>
+              <span class="text-[10px] text-brand-gray line-through">$33.32</span>
+            </div>
+          </a>
+          <a href="product.html" class="product-card group">
+            <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-3">
+              <img src="imgs/meme5.jpg" alt="Don't Worry Kitten Tee" class="product-img w-full h-full object-cover object-center" />
+            </div>
+            <h3 class="text-[12px] font-medium leading-snug mb-1">"Don't Worry Kitten" Wolf Tee</h3>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[12px] font-semibold">$22.49</span>
+              <span class="text-[10px] text-brand-gray line-through">$29.99</span>
+            </div>
+          </a>
+          <a href="product.html" class="product-card group">
+            <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-3">
+              <img src="imgs/meme7.jpg" alt="The Wock Tee" class="product-img w-full h-full object-cover object-center" />
+            </div>
+            <h3 class="text-[12px] font-medium leading-snug mb-1">"The Wock" Meme Tee</h3>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[12px] font-semibold">$27.23</span>
+              <span class="text-[10px] text-brand-gray line-through">$36.31</span>
+            </div>
+          </a>
+          <a href="product.html" class="product-card group">
+            <div class="relative aspect-[3/4] bg-brand-light rounded-sm overflow-hidden mb-3">
+              <img src="imgs/meme8.jpg" alt="Tel Aviv Impressed Tee" class="product-img w-full h-full object-cover object-center" />
+            </div>
+            <h3 class="text-[12px] font-medium leading-snug mb-1">"Tel Aviv Impressed" Meme Tee</h3>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[12px] font-semibold">$25.49</span>
+              <span class="text-[10px] text-brand-gray line-through">$33.99</span>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </section>
